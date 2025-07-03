@@ -1,0 +1,90 @@
+---
+title: "Statistical-Modelling-Project"
+author: "Stephen Fekete"
+date: "2025-05-29"
+output: word_document
+---
+
+## Project Summary
+
+This project explores the relationship between the Southern Oscillation Index (SOI) and seasonal rainfall across Australia. 
+Using R, we perform multiple linear regression, diagnostic analysis, and model refinement to improve predictive accuracy.
+
+
+## Load and Inspect Data
+
+```{r}
+# Load required libraries
+library(tidyverse)
+library(broom)
+
+# Read in data
+soi_df <- read_csv("seasonal_soi_data.csv")
+rain_df <- read_csv("total_seasonal_rainfall.csv")
+
+# Merge datasets
+df <- inner_join(soi_df, rain_df, by = c("Year", "Season"))
+head(df)
+```
+
+This section loads the required datasets, merges them on common keys, and previews the data for further analysis.
+
+## Exploratory Data Analysis
+
+```{r}
+# Summary statistics
+summary(df)
+
+# Scatter plot by season with null and linear model overlays
+ggplot(total_seasonal_rainfall, aes(x = SeasonalSOI, y = total_seas_prcp)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm", formula = y ~ 1, se = FALSE, colour = "red", linetype = "dashed") +  # Null model
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE, colour = "blue") +  # Linear model
+  facet_wrap(~ Season) +
+  labs(
+    title = "Relationship between Seasonal SOI and Rainfall by Season",
+    x = "Seasonal SOI",
+    y = "Total Seasonal Rainfall (mm)"
+  ) +
+  theme_bw()
+```
+
+This plot compares the relationship between SOI and total rainfall across seasons. The dashed red line represents the null model (mean rainfall), while the solid blue line represents the fitted linear model. A stronger positive relationship is evident in summer, while other seasons show minimal trends.
+
+## Linear Regression Model
+
+```{r}
+# Fit model
+model <- lm(total_seas_prcp ~ SeasonalSOI, data = df)
+
+# Model summary
+summary(model)
+```
+This section fits a linear regression model to predict total seasonal rainfall using SOI as the predictor and summarizes the model's output.
+
+## Residual Diagnostics
+
+```{r}
+# Plot residuals
+par(mfrow = c(2, 2))
+plot(model)
+
+# Check for normality
+qqnorm(resid(model), main = "QQ Plot of Residuals")
+qqline(resid(model))
+```
+Here we validate model assumptions using residual plots and a Q-Q plot to assess normality of residuals.
+
+## Model Refinement
+
+```{r}
+# Polynomial model
+model_poly <- lm(total_seas_prcp ~ poly(SeasonalSOI, 2), data = df)
+summary(model_poly)
+```
+
+This section explores a refined polynomial model to capture any potential nonlinear relationships between SOI and rainfall.
+
+## Conclusion
+
+The analysis shows a moderate relationship between SOI and seasonal rainfall. Model diagnostics suggest assumptions are reasonably met, and a polynomial fit may slightly improve accuracy.
