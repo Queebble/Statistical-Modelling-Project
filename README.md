@@ -22,7 +22,7 @@ It uses linear regression and exploratory data analysis techniques to evaluate h
 - Residual plots and Q-Q plot for diagnostics
 
 ## 📁 Files
-- `Rainfall_Regression_Project_Annotated.Rmd`: Cleaned and annotated R Markdown report
+- `Statistical-Modelling-Project.Rmd`: Cleaned and annotated R Markdown report
 - CSV files: `seasonal_soi_data.csv`, `total_seasonal_rainfall.csv`
 
 ## 🧠 Key Insights
