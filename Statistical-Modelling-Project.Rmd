@@ -2,7 +2,9 @@
 title: "Statistical-Modelling-Project"
 author: "Stephen Fekete"
 date: "2025-05-29"
-output: word_document
+output:
+  html_document:
+    df_print: paged
 ---
 
 ## Project Summary
@@ -27,6 +29,7 @@ df <- inner_join(soi_df, rain_df, by = c("Year", "Season"))
 head(df)
 ```
 
+
 This section loads the required datasets, merges them on common keys, and previews the data for further analysis.
 
 ## Exploratory Data Analysis
@@ -36,7 +39,7 @@ This section loads the required datasets, merges them on common keys, and previe
 summary(df)
 
 # Scatter plot by season with null and linear model overlays
-ggplot(total_seasonal_rainfall, aes(x = SeasonalSOI, y = total_seas_prcp)) +
+ggplot(df, aes(x = SeasonalSOI, y = total_seas_prcp)) +
   geom_point(alpha = 0.6) +
   geom_smooth(method = "lm", formula = y ~ 1, se = FALSE, colour = "red", linetype = "dashed") +  # Null model
   geom_smooth(method = "lm", formula = y ~ x, se = FALSE, colour = "blue") +  # Linear model
@@ -73,6 +76,7 @@ plot(model)
 qqnorm(resid(model), main = "QQ Plot of Residuals")
 qqline(resid(model))
 ```
+
 Here we validate model assumptions using residual plots and a Q-Q plot to assess normality of residuals.
 
 ## Model Refinement
