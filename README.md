@@ -2,11 +2,11 @@
 # Rainfall & SOI Regression Analysis
 
 This project investigates the relationship between the **Southern Oscillation Index (SOI)** and **seasonal rainfall** across Australia. 
-It uses linear regression and exploratory data analysis techniques to evaluate how SOI influences precipitation patterns.
+It employs linear regression and exploratory data analysis techniques to assess the impact of SOI on precipitation patterns.
 
 ## 📊 Project Goals
 - Merge and clean seasonal rainfall and SOI datasets
-- Visualize rainfall trends across seasons
+- Visualise rainfall trends across seasons
 - Build and evaluate linear and polynomial regression models
 - Perform residual diagnostics and model refinement
 
@@ -38,4 +38,4 @@ To run this project:
 
 ---
 
-Created as part of a data science coursework project, demonstrating regression modeling, EDA, and statistical communication.
+Created as part of a data science coursework project, demonstrating regression modelling, EDA, and statistical communication.
