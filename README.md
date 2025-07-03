@@ -1,36 +1,41 @@
-# Rainfall Analysis in South East Queensland  
-*Statistical Modelling Project – MXN500 (QUT)*
 
-## 📘 Overview
-This project performs an in-depth statistical analysis of long-term rainfall data from climate stations across South East Queensland. Using R, we applied data wrangling, visualization, and hypothesis testing to identify patterns in precipitation by weekday and location.
+# Rainfall & SOI Regression Analysis
 
-## 📊 Objectives
-- Clean and filter BOM metadata to identify valid climate stations
-- Isolate stations with >110 years of rainfall records in SEQ
-- Perform exploratory data analysis and summary statistics
-- Conduct a Chi-Square test to assess rainfall distribution across weekdays
-- Visualize spatial station data using `ggmap`
+This project investigates the relationship between the **Southern Oscillation Index (SOI)** and **seasonal rainfall** across Australia. 
+It uses linear regression and exploratory data analysis techniques to evaluate how SOI influences precipitation patterns.
 
-## 🛠 Tools & Packages
-- `R` and `R Markdown`
-- `tidyverse` (dplyr, ggplot2, tidyr)
-- `ggmap` for geographic plotting
-- `readr` and `lubridate` for data handling
+## 📊 Project Goals
+- Merge and clean seasonal rainfall and SOI datasets
+- Visualize rainfall trends across seasons
+- Build and evaluate linear and polynomial regression models
+- Perform residual diagnostics and model refinement
 
-## 📈 Key Features
-- Interactive visualizations of climate station distribution
-- Chi-square hypothesis testing on rainfall occurrence by weekday
-- Filtering and mapping of stations based on metadata quality
-- Clear statistical commentary and insights on regional rainfall trends
+## 🛠️ Tools & Libraries
+- R
+- tidyverse
+- ggplot2
+- broom
 
-## 📁 Files Included
-- `MXN500-Workbook-Part-4.Rmd`: Full R Markdown source file
-- `report.pdf` *(optional)*: Compiled version of the report
-- `README.md`: This documentation file
+## 📈 Visual Outputs
+- Faceted scatter plots of SOI vs rainfall by season
+- Regression lines with null model comparison
+- Residual plots and Q-Q plot for diagnostics
 
-## 🧠 Author
-Stephen Fekete  
-Graduate Certificate in Data Science – Queensland University of Technology (QUT)
+## 📁 Files
+- `Rainfall_Regression_Project_Annotated.Rmd`: Cleaned and annotated R Markdown report
+- CSV files: `seasonal_soi_data.csv`, `total_seasonal_rainfall.csv`
 
-## 🔗 Live Report (if hosted)
-[View HTML Report](https://stephenfekete.github.io/mxn500-rainfall-analysis) *(update this link if hosted)*
+## 🧠 Key Insights
+- A moderate positive relationship exists between SOI and rainfall in **Summer**
+- Other seasons show weaker or negligible trends
+- A polynomial model marginally improves fit over a basic linear model
+
+## 🔄 Reproducibility
+To run this project:
+1. Clone the repository
+2. Open the `.Rmd` file in RStudio
+3. Knit to HTML or PDF
+
+---
+
+Created as part of a data science coursework project, demonstrating regression modeling, EDA, and statistical communication.
