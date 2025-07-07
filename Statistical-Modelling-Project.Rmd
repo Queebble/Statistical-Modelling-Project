@@ -9,9 +9,7 @@ output:
 
 ## Project Summary
 
-This project explores the relationship between the Southern Oscillation Index (SOI) and seasonal rainfall across Australia. 
-Using R, we perform multiple linear regression, diagnostic analysis, and model refinement to improve predictive accuracy.
-
+This project explores the relationship between the Southern Oscillation Index (SOI) and seasonal rainfall across Australia. Using R, we perform multiple linear regression, diagnostic analysis, and model refinement to improve predictive accuracy.
 
 ## Load and Inspect Data
 
@@ -28,7 +26,6 @@ rain_df <- read_csv("total_seasonal_rainfall.csv")
 df <- inner_join(soi_df, rain_df, by = c("Year", "Season"))
 head(df)
 ```
-
 
 This section loads the required datasets, merges them on common keys, and previews the data for further analysis.
 
@@ -52,7 +49,11 @@ ggplot(df, aes(x = SeasonalSOI, y = total_seas_prcp)) +
   theme_bw()
 ```
 
-This plot compares the relationship between SOI and total rainfall across seasons. The dashed red line represents the null model (mean rainfall), while the solid blue line represents the fitted linear model. A stronger positive relationship is evident in summer, while other seasons show minimal trends.
+This plot compares the relationship between SOI and total rainfall across seasons. The dashed red line represents the null model (mean rainfall), while the solid blue line represents the fitted linear model.
+
+Based on the visualisation, Summer shows the strongest and most visually clear linear relationship between SeasonalSOI and total_seas_prcp. The regression line for Summer has a noticeable positive slope, suggesting that as SOI increases (moving toward La Niña), total rainfall also increases.
+
+In contrast, Autumn, Winter, and Spring show much flatter slopes, and the data points do not form a strong linear pattern. Therefore, I would expect only Summer to have a statistically significant linear relationship between SOI and seasonal rainfall.
 
 ## Linear Regression Model
 
@@ -63,6 +64,7 @@ model <- lm(total_seas_prcp ~ SeasonalSOI, data = df)
 # Model summary
 summary(model)
 ```
+
 This section fits a linear regression model to predict total seasonal rainfall using SOI as the predictor and summarizes the model's output.
 
 ## Residual Diagnostics
@@ -77,7 +79,17 @@ qqnorm(resid(model), main = "QQ Plot of Residuals")
 qqline(resid(model))
 ```
 
-Here we validate model assumptions using residual plots and a Q-Q plot to assess normality of residuals.
+Here we validate model assumptions using residual plots and a Q-Q plot to assess normality of residuals. The diagnostic plots provide insights into the validity of linear regression assumptions for the fitted model:
+
+-   Residuals vs Fitted: The residuals appear randomly scattered around zero across the range of fitted values, which supports the assumptions of linearity and homoscedasticity (constant variance). There is no clear pattern indicating non-linearity.
+
+-   Q-Q Plot (Quantile-Quantile): Most points fall along the 45-degree reference line, suggesting that the residuals are approximately normally distributed. However, slight curvature at both ends indicates mild deviations from normality in the tails.
+
+-   Scale-Location Plot: The spread of the square-root standardized residuals remains fairly constant across the range of fitted values. This reinforces the assumption of homoscedasticity, with no major signs of increasing or decreasing variance.
+
+-   Residuals vs Leverage: A few points show moderate leverage and influence, as indicated by Cook’s distance contours. Points such as 169, 172 and 209 should be monitored, but no extreme outliers appear to unduly influence the model.
+
+The diagnostic plots overall indicate that the model satisfies the key assumptions of linear regression—linearity, constant variance, normality of residuals, and low influence from outliers—making it reliable for interpretation and inference.
 
 ## Model Refinement
 
@@ -87,7 +99,24 @@ model_poly <- lm(total_seas_prcp ~ poly(SeasonalSOI, 2), data = df)
 summary(model_poly)
 ```
 
-This section explores a refined polynomial model to capture any potential nonlinear relationships between SOI and rainfall.
+To capture potential nonlinear relationships between the **Southern Oscillation Index (SOI)** and **seasonal rainfall**, a second-degree polynomial regression model was fit:
+
+-   The model takes the form:\
+    `total_seas_prcp ~ poly(SeasonalSOI, 2)`
+
+-   **Interpretation of coefficients:**
+
+    -   Both polynomial terms (degree 1 and 2) are statistically significant (`p < 0.05`), indicating that adding curvature to the model provides explanatory value.
+
+    -   The significant quadratic term (`poly(SeasonalSOI, 2)2`) suggests that rainfall may not increase or decrease linearly with SOI, but rather exhibits a curved relationship.
+
+-   **Model fit:**
+
+    -   **Adjusted R-squared** is \~0.065, a modest improvement over a linear model, suggesting that SOI explains some—but not a large—portion of rainfall variability.
+
+    -   The **F-statistic** and associated **p-value (2.2e-05)** indicate that the model as a whole is statistically significant.
+
+The analysis shows a moderate relationship between SOI and seasonal rainfall. Model diagnostics suggest assumptions are reasonably met, and a polynomial fit may slightly improve accuracy.
 
 ## Conclusion
 
